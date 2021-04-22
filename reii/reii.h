@@ -63,10 +63,9 @@ typedef enum ReiiClearFlagBits {
 } ReiiClearFlagBits;
 
 typedef enum ReiiCullMode {
-  REII_CULL_MODE_NONE           = 0,
-  REII_CULL_MODE_FRONT          = 0x0404,
-  REII_CULL_MODE_BACK           = 0x0405,
-  REII_CULL_MODE_FRONT_AND_BACK = 0x0408,
+  REII_CULL_MODE_NONE  = 0,
+  REII_CULL_MODE_FRONT = 0x0404,
+  REII_CULL_MODE_BACK  = 0x0405,
 } ReiiCullMode;
 
 typedef enum ReiiFrontFace {
@@ -126,8 +125,6 @@ typedef enum ReiiBlendFactor {
   REII_BLEND_FACTOR_ONE_MINUS_TARGET_ALPHA   = 0x0305,
   REII_BLEND_FACTOR_CONSTANT_COLOR           = 0x8001,
   REII_BLEND_FACTOR_ONE_MINUS_CONSTANT_COLOR = 0x8002,
-  REII_BLEND_FACTOR_CONSTANT_ALPHA           = 0x8003,
-  REII_BLEND_FACTOR_ONE_MINUS_CONSTANT_ALPHA = 0x8004,
   REII_BLEND_FACTOR_SOURCE_ALPHA_SATURATE    = 0x0308,
 } ReiiBlendFactor;
 
@@ -159,16 +156,13 @@ typedef struct ReiiMeshState {
   ReiiStencilOp     stencilTestFrontStencilTestPassDepthTestPassOp;
   ReiiStencilOp     stencilTestFrontStencilTestPassDepthTestFailOp;
   ReiiCompareOp     stencilTestFrontCompareOp;
-  unsigned          stencilTestFrontCompareMask;
-  unsigned          stencilTestFrontWriteMask;
-  unsigned          stencilTestFrontReference;
   ReiiStencilOp     stencilTestBackStencilTestFailOp;
   ReiiStencilOp     stencilTestBackStencilTestPassDepthTestPassOp;
   ReiiStencilOp     stencilTestBackStencilTestPassDepthTestFailOp;
   ReiiCompareOp     stencilTestBackCompareOp;
-  unsigned          stencilTestBackCompareMask;
-  unsigned          stencilTestBackWriteMask;
-  unsigned          stencilTestBackReference;
+  unsigned          stencilTestFrontAndBackCompareMask;
+  unsigned          stencilTestFrontAndBackWriteMask;
+  unsigned          stencilTestFrontAndBackReference;
   ReiiBool32        blendLogicOpEnable;
   ReiiLogicOp       blendLogicOp;
   float             blendConstants[4];
