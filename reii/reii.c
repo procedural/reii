@@ -86,7 +86,7 @@ void reiiTextureSetStateSampler(ReiContext * context, ReiTextureBinding binding,
   reiBindTextureToActiveTextureSlot(context, metabinding, 0);
 }
 
-void reiiTextureDefineAndCopyFromCpu(ReiContext * context, ReiTextureBinding binding, ReiHandleTexture bindingTexture, int bindingLevel, ReiTextureTexelFormat bindingTexelFormat, int width, int height, ReiTextureTexelFormat texelsFormat, ReiTextureTexelType texelsType, int texelsBytesAlignment, void * texels) {
+void reiiTextureDefineAndCopyFromCpu(ReiContext * context, ReiTextureBinding binding, ReiHandleTexture bindingTexture, int bindingLevel, ReiTextureTexelFormat bindingTexelFormat, int width, int height, ReiTextureTexelFormat texelsFormat, ReiTextureTexelType texelsType, int texelsBytesAlignment, const void * texels) {
   ReiTextureBinding metabinding = binding == REI_TEXTURE_BINDING_2D ? REI_TEXTURE_BINDING_2D : REI_TEXTURE_BINDING_CUBE;
   reiSetActiveTextureSlot(context, 0);
   reiBindTextureToActiveTextureSlot(context, metabinding, bindingTexture);
@@ -102,7 +102,7 @@ void reiiTextureDefineAndCopyFromBackbuffer(ReiContext * context, ReiTextureBind
   reiBindTextureToActiveTextureSlot(context, metabinding, 0);
 }
 
-void reiiTextureCopyFromCpu(ReiContext * context, ReiTextureBinding binding, ReiHandleTexture bindingTexture, int bindingLevel, int bindingX, int bindingY, int width, int height, ReiTextureTexelFormat texelsFormat, ReiTextureTexelType texelsType, int texelsBytesAlignment, void * texels) {
+void reiiTextureCopyFromCpu(ReiContext * context, ReiTextureBinding binding, ReiHandleTexture bindingTexture, int bindingLevel, int bindingX, int bindingY, int width, int height, ReiTextureTexelFormat texelsFormat, ReiTextureTexelType texelsType, int texelsBytesAlignment, const void * texels) {
   ReiTextureBinding metabinding = binding == REI_TEXTURE_BINDING_2D ? REI_TEXTURE_BINDING_2D : REI_TEXTURE_BINDING_CUBE;
   reiSetActiveTextureSlot(context, 0);
   reiBindTextureToActiveTextureSlot(context, metabinding, bindingTexture);
