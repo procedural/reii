@@ -241,7 +241,7 @@ void reiiSetProgramEnvironmentValueFragment(ReiContext * context, unsigned index
   reiSetProgramEnvironmentValue(context, REI_PROGRAM_BINDING_FRAGMENT, index, x, y, z, w);
 }
 
-void reiiSubmitCommandLists(ReiContext * context, unsigned listsCount, ReiHandleCommandList * lists) {
+void reiiSubmitCommandLists(ReiContext * context, unsigned listsCount, const ReiHandleCommandList * lists) {
   reiSubmitCommandLists(context, listsCount, lists);
 }
 

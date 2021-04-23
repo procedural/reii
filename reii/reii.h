@@ -236,7 +236,7 @@ void reiiCommandMeshPosition                (ReiiContext * context, float x, flo
 
 void reiiSetProgramEnvironmentValueVertex   (ReiiContext * context, unsigned index, float x, float y, float z, float w);
 void reiiSetProgramEnvironmentValueFragment (ReiiContext * context, unsigned index, float x, float y, float z, float w);
-void reiiSubmitCommandLists                 (ReiiContext * context, unsigned listsCount, ReiiHandleCommandList * lists);
+void reiiSubmitCommandLists                 (ReiiContext * context, unsigned listsCount, const ReiiHandleCommandList * lists);
 
 // Destroy
 
