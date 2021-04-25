@@ -56,8 +56,6 @@ typedef struct ReiiMeshState {
   char *           codeFragment;
 } ReiiMeshState;
 
-ReiiMeshState * REII_GLOBAL_CURRENT_MESH_STATE = 0;
-
 // Context
 
 void reiiCreateContext(ReiTypeProcedureGetProcAddress getProcAddress, ReiContext * outContext) {
@@ -134,7 +132,6 @@ void reiiCommandListSet(ReiContext * context, ReiHandleCommandList list) {
 
 void reiiCommandListEnd(ReiContext * context) {
   reiCommandListEnd(context);
-  REII_GLOBAL_CURRENT_MESH_STATE = 0;
 }
 
 void reiiCommandSetViewport(ReiContext * context, int x, int y, int width, int height) {
@@ -152,40 +149,39 @@ void reiiCommandClear(ReiContext * context, ReiClearFlags clear, float depthValu
 void reiiCommandMeshSetState(ReiContext * context, ReiiMeshState * state, ReiiMeshTextureBindings * bindings) {
   const char * error = NULL;
   unsigned i = 0;
-  if (state->programVertex == 0) {
-    ReiHandleProgram program = reiCreateProgram(context);
-    reiBindProgram(context, REI_PROGRAM_BINDING_VERTEX, program);
-    reiProgramInitialize(context, REI_PROGRAM_BINDING_VERTEX, strlen(state->codeVertex), state->codeVertex);
-    reiBindProgram(context, REI_PROGRAM_BINDING_VERTEX, REII_GLOBAL_CURRENT_MESH_STATE == 0 ? 0 : REII_GLOBAL_CURRENT_MESH_STATE->programVertex);
-    error = reiGetProgramStatusString(context);
-    if (error != NULL) {
-      if (error[0] != '\0') {
-        printf("%s", "[reiiCommandMeshSetState] Vertex code error:\n");
-        printf("%s", error);
-        fflush(stdout);
+  if (state != 0) {
+    if (state->programVertex == 0) {
+      ReiHandleProgram program = reiCreateProgram(context);
+      reiBindProgram(context, REI_PROGRAM_BINDING_VERTEX, program);
+      reiProgramInitialize(context, REI_PROGRAM_BINDING_VERTEX, strlen(state->codeVertex), state->codeVertex);
+      reiBindProgram(context, REI_PROGRAM_BINDING_VERTEX, 0);
+      error = reiGetProgramStatusString(context);
+      if (error != NULL) {
+        if (error[0] != '\0') {
+          printf("%s", "[reiiCommandMeshSetState] Vertex code error:\n");
+          printf("%s", error);
+          fflush(stdout);
+        }
       }
+      state->programVertex = program;
     }
-    state->programVertex = program;
-  }
-  if (state->programFragment == 0) {
-    ReiHandleProgram program = reiCreateProgram(context);
-    reiBindProgram(context, REI_PROGRAM_BINDING_FRAGMENT, program);
-    reiProgramInitialize(context, REI_PROGRAM_BINDING_FRAGMENT, strlen(state->codeFragment), state->codeFragment);
-    reiBindProgram(context, REI_PROGRAM_BINDING_FRAGMENT, REII_GLOBAL_CURRENT_MESH_STATE == 0 ? 0 : REII_GLOBAL_CURRENT_MESH_STATE->programFragment);
-    error = reiGetProgramStatusString(context);
-    if (error != NULL) {
-      if (error[0] != '\0') {
-        printf("%s", "[reiiCommandMeshSetState] Fragment code error:\n");
-        printf("%s", error);
-        fflush(stdout);
+    if (state->programFragment == 0) {
+      ReiHandleProgram program = reiCreateProgram(context);
+      reiBindProgram(context, REI_PROGRAM_BINDING_FRAGMENT, program);
+      reiProgramInitialize(context, REI_PROGRAM_BINDING_FRAGMENT, strlen(state->codeFragment), state->codeFragment);
+      reiBindProgram(context, REI_PROGRAM_BINDING_FRAGMENT, 0);
+      error = reiGetProgramStatusString(context);
+      if (error != NULL) {
+        if (error[0] != '\0') {
+          printf("%s", "[reiiCommandMeshSetState] Fragment code error:\n");
+          printf("%s", error);
+          fflush(stdout);
+        }
       }
+      state->programFragment = program;
     }
-    state->programFragment = program;
-  }
-  if (state != REII_GLOBAL_CURRENT_MESH_STATE) {
     reiCommandMeshSetState(context, (ReiMeshState *)((void *)state));
   }
-  REII_GLOBAL_CURRENT_MESH_STATE = state;
   if (bindings != 0) {
     for (; i < REII_MAX_TEXTURE_BINDINGS_COUNT; i += 1) {
       if (bindings->binding[i] != 0 && bindings->texture[i] == 0) {
