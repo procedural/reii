@@ -6,6 +6,14 @@ LD_LIBRARY_PATH=../glfw/lib/ ./a.out
 exit
 #endif
 
+// NOTE(Constantine): Microsoft people are all fired. https://github.com/ocornut/imgui/issues/2043
+// [Win32] Our example includes a copy of glfw3.lib pre-compiled with VS2010 to maximize ease of testing and compatibility with old VS compilers.
+// To link with VS2010-era libraries, VS2015+ requires linking with legacy_stdio_definitions.lib, which we do using this pragma.
+// Your own project should not be affected, as you are likely to link with a newer binary of GLFW that is adequate for your version of Visual Studio.
+#if defined(_MSC_VER) && (_MSC_VER >= 1900)
+#pragma comment(lib, "legacy_stdio_definitions.lib")
+#endif
+
 #include "../reii/reii.h"
 #define GLFW_INCLUDE_NONE
 #include "../glfw/include/glfw3.h"
@@ -286,10 +294,10 @@ int main() {
   ReiiHandleCommandList list_clear = 0;
   reiiCreateCommandList(ctx, &list_clear);
   reiiCommandListSet(ctx, list_clear);
-    reiiCommandSetViewport(ctx, 0, 0, 1280, 720);
-    reiiCommandSetScissor(ctx, 0, 0, 1280, 720);
-    reiiCommandClear(ctx, REII_CLEAR_DEPTH_BIT | REII_CLEAR_COLOR_BIT, 0.f, 0, 0.98f, 0.98f, 0.98f, 1.f);
-  reiiCommandListEnd(ctx);
+    reiiCommandSetViewport(ctx, list_clear, 0, 0, 1280, 720);
+    reiiCommandSetScissor(ctx, list_clear, 0, 0, 1280, 720);
+    reiiCommandClear(ctx, list_clear, REII_CLEAR_DEPTH_BIT | REII_CLEAR_COLOR_BIT, 0.f, 0, 0.98f, 0.98f, 0.98f, 1.f);
+  reiiCommandListEnd(ctx, list_clear);
 
   ReiiHandleCommandList list = 0;
   reiiCreateCommandList(ctx, &list);
@@ -312,15 +320,15 @@ int main() {
       ReiiMeshTextureBindings bindings = {};
       bindings.binding[0] = REII_TEXTURE_BINDING_2D;
       bindings.texture[0] = submesh_texures[j];
-      reiiCommandMeshSetState(ctx, &mesh_state, &bindings);
-      reiiCommandMeshSet(ctx);
+      reiiCommandMeshSetState(ctx, list, &mesh_state, &bindings);
+      reiiCommandMeshSet(ctx, list);
       for (int i = submesh_vertex_begin[j]; i < submesh_vertex_end[j]; i += 1) {
-        reiiCommandMeshTexcoord(ctx, 0, mesh_uvs[i * 2 + 0], 1 - mesh_uvs[i * 2 + 1], 0, 0);
-        reiiCommandMeshPosition(ctx, mesh_vertices[i * 4 + 0], mesh_vertices[i * 4 + 1], mesh_vertices[i * 4 + 2], 1);
+        reiiCommandMeshTexcoord(ctx, list, 0, mesh_uvs[i * 2 + 0], 1 - mesh_uvs[i * 2 + 1], 0, 0);
+        reiiCommandMeshPosition(ctx, list, mesh_vertices[i * 4 + 0], mesh_vertices[i * 4 + 1], mesh_vertices[i * 4 + 2], 1);
       }
-      reiiCommandMeshEnd(ctx);
+      reiiCommandMeshEnd(ctx, list);
     }
-  reiiCommandListEnd(ctx);
+  reiiCommandListEnd(ctx, list);
 
   ReiiHandleCommandList list_with_blend = 0;
   reiiCreateCommandList(ctx, &list_with_blend);
@@ -343,15 +351,15 @@ int main() {
       ReiiMeshTextureBindings bindings = {};
       bindings.binding[0] = REII_TEXTURE_BINDING_2D;
       bindings.texture[0] = submesh_texures[j];
-      reiiCommandMeshSetState(ctx, &mesh_state_with_blend, &bindings);
-      reiiCommandMeshSet(ctx);
+      reiiCommandMeshSetState(ctx, list_with_blend, &mesh_state_with_blend, &bindings);
+      reiiCommandMeshSet(ctx, list_with_blend);
       for (int i = submesh_vertex_begin[j]; i < submesh_vertex_end[j]; i += 1) {
-        reiiCommandMeshTexcoord(ctx, 0, mesh_uvs[i * 2 + 0], 1 - mesh_uvs[i * 2 + 1], 0, 0);
-        reiiCommandMeshPosition(ctx, mesh_vertices[i * 4 + 0], mesh_vertices[i * 4 + 1], mesh_vertices[i * 4 + 2], 1);
+        reiiCommandMeshTexcoord(ctx, list_with_blend, 0, mesh_uvs[i * 2 + 0], 1 - mesh_uvs[i * 2 + 1], 0, 0);
+        reiiCommandMeshPosition(ctx, list_with_blend, mesh_vertices[i * 4 + 0], mesh_vertices[i * 4 + 1], mesh_vertices[i * 4 + 2], 1);
       }
-      reiiCommandMeshEnd(ctx);
+      reiiCommandMeshEnd(ctx, list_with_blend);
     }
-  reiiCommandListEnd(ctx);
+  reiiCommandListEnd(ctx, list_with_blend);
 
   glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 

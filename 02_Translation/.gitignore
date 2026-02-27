@@ -5,3 +5,5 @@ CMakeLists.txt.user
 *.sln
 *.suo
 x64
+.vs/*
+vs2012.vcxproj.user

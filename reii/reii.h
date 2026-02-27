@@ -220,17 +220,17 @@ void reiiReadbackToCpuFromBackbuffer        (ReiiContext * context, int backbuff
 
 void reiiCreateCommandList                  (ReiiContext * context, ReiiHandleCommandList * outList);
 void reiiCommandListSet                     (ReiiContext * context, ReiiHandleCommandList list);
-void reiiCommandListEnd                     (ReiiContext * context);
-void reiiCommandSetViewport                 (ReiiContext * context, int x, int y, int width, int height);
-void reiiCommandSetScissor                  (ReiiContext * context, int x, int y, int width, int height);
-void reiiCommandClear                       (ReiiContext * context, ReiiClearFlags clear, float depthValue, unsigned stencilValue, float colorR, float colorG, float colorB, float colorA);
-void reiiCommandMeshSetState                (ReiiContext * context, ReiiMeshState * state, ReiiMeshTextureBindings * bindings);
-void reiiCommandMeshSet                     (ReiiContext * context);
-void reiiCommandMeshEnd                     (ReiiContext * context);
-void reiiCommandMeshTexcoord                (ReiiContext * context, unsigned index, float x, float y, float z, float w);
-void reiiCommandMeshColor                   (ReiiContext * context, float r, float g, float b, float a);
-void reiiCommandMeshNormal                  (ReiiContext * context, float x, float y, float z);
-void reiiCommandMeshPosition                (ReiiContext * context, float x, float y, float z, float w);
+void reiiCommandListEnd                     (ReiiContext * context, ReiiHandleCommandList list);
+void reiiCommandSetViewport                 (ReiiContext * context, ReiiHandleCommandList list, int x, int y, int width, int height);
+void reiiCommandSetScissor                  (ReiiContext * context, ReiiHandleCommandList list, int x, int y, int width, int height);
+void reiiCommandClear                       (ReiiContext * context, ReiiHandleCommandList list, ReiiClearFlags clear, float depthValue, unsigned stencilValue, float colorR, float colorG, float colorB, float colorA);
+void reiiCommandMeshSetState                (ReiiContext * context, ReiiHandleCommandList list, ReiiMeshState * state, ReiiMeshTextureBindings * bindings);
+void reiiCommandMeshSet                     (ReiiContext * context, ReiiHandleCommandList list);
+void reiiCommandMeshEnd                     (ReiiContext * context, ReiiHandleCommandList list);
+void reiiCommandMeshTexcoord                (ReiiContext * context, ReiiHandleCommandList list, unsigned index, float x, float y, float z, float w);
+void reiiCommandMeshColor                   (ReiiContext * context, ReiiHandleCommandList list, float r, float g, float b, float a);
+void reiiCommandMeshNormal                  (ReiiContext * context, ReiiHandleCommandList list, float x, float y, float z);
+void reiiCommandMeshPosition                (ReiiContext * context, ReiiHandleCommandList list, float x, float y, float z, float w);
 
 // Submit
 

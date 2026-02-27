@@ -5,6 +5,14 @@ LD_LIBRARY_PATH=../glfw/lib/ ./a.out
 exit
 #endif
 
+// NOTE(Constantine): Microsoft people are all fired. https://github.com/ocornut/imgui/issues/2043
+// [Win32] Our example includes a copy of glfw3.lib pre-compiled with VS2010 to maximize ease of testing and compatibility with old VS compilers.
+// To link with VS2010-era libraries, VS2015+ requires linking with legacy_stdio_definitions.lib, which we do using this pragma.
+// Your own project should not be affected, as you are likely to link with a newer binary of GLFW that is adequate for your version of Visual Studio.
+#if defined(_MSC_VER) && (_MSC_VER >= 1900)
+#pragma comment(lib, "legacy_stdio_definitions.lib")
+#endif
+
 #include "../reii/reii.h"
 #define GLFW_INCLUDE_NONE
 #include "../glfw/include/glfw3.h"
@@ -118,26 +126,26 @@ int main() {
   ReiiHandleCommandList list_clear = 0;
   reiiCreateCommandList(ctx, &list_clear);
   reiiCommandListSet(ctx, list_clear);
-    reiiCommandSetViewport(ctx, 0, 0, 1000, 1000);
-    reiiCommandSetScissor(ctx, 0, 0, 1000, 1000);
-    reiiCommandClear(ctx, REII_CLEAR_DEPTH_BIT | REII_CLEAR_COLOR_BIT, 0.f, 0, 0.1f, 0.1f, 0.15f, 1.f);
-  reiiCommandListEnd(ctx);
+    reiiCommandSetViewport(ctx, list_clear, 0, 0, 1000, 1000);
+    reiiCommandSetScissor(ctx, list_clear, 0, 0, 1000, 1000);
+    reiiCommandClear(ctx, list_clear, REII_CLEAR_DEPTH_BIT | REII_CLEAR_COLOR_BIT, 0.f, 0, 0.1f, 0.1f, 0.15f, 1.f);
+  reiiCommandListEnd(ctx, list_clear);
 
   ReiiHandleCommandList list_mesh_state = 0;
   reiiCreateCommandList(ctx, &list_mesh_state);
   reiiCommandListSet(ctx, list_mesh_state);
-    reiiCommandMeshSetState(ctx, &mesh_state, 0);
-  reiiCommandListEnd(ctx);
+    reiiCommandMeshSetState(ctx, list_mesh_state, &mesh_state, 0);
+  reiiCommandListEnd(ctx, list_mesh_state);
 
   ReiiHandleCommandList list_mesh = 0;
   reiiCreateCommandList(ctx, &list_mesh);
   reiiCommandListSet(ctx, list_mesh);
-    reiiCommandMeshSet(ctx);
+    reiiCommandMeshSet(ctx, list_mesh);
     for (int i = 0, mesh_vertices_count = countof(mesh_vertices) / 3; i < mesh_vertices_count; i += 1) {
-      reiiCommandMeshPosition(ctx, mesh_vertices[i * 3 + 0], mesh_vertices[i * 3 + 1], mesh_vertices[i * 3 + 2], 1);
+      reiiCommandMeshPosition(ctx, list_mesh, mesh_vertices[i * 3 + 0], mesh_vertices[i * 3 + 1], mesh_vertices[i * 3 + 2], 1);
     }
-    reiiCommandMeshEnd(ctx);
-  reiiCommandListEnd(ctx);
+    reiiCommandMeshEnd(ctx, list_mesh);
+  reiiCommandListEnd(ctx, list_mesh);
 
   const int instanceCountX = 25;
   const int instanceCountY = 25;

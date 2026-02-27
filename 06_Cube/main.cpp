@@ -5,6 +5,14 @@ LD_LIBRARY_PATH=../glfw/lib/ ./a.out
 exit
 #endif
 
+// NOTE(Constantine): Microsoft people are all fired. https://github.com/ocornut/imgui/issues/2043
+// [Win32] Our example includes a copy of glfw3.lib pre-compiled with VS2010 to maximize ease of testing and compatibility with old VS compilers.
+// To link with VS2010-era libraries, VS2015+ requires linking with legacy_stdio_definitions.lib, which we do using this pragma.
+// Your own project should not be affected, as you are likely to link with a newer binary of GLFW that is adequate for your version of Visual Studio.
+#if defined(_MSC_VER) && (_MSC_VER >= 1900)
+#pragma comment(lib, "legacy_stdio_definitions.lib")
+#endif
+
 #include "../reii/reii.h"
 #define GLFW_INCLUDE_NONE
 #include "../glfw/include/glfw3.h"
@@ -291,59 +299,59 @@ int main() {
   ReiiHandleCommandList list = 0;
   reiiCreateCommandList(ctx, &list);
   reiiCommandListSet(ctx, list);
-    reiiCommandSetViewport(ctx, 0, 0, 700, 700);
-    reiiCommandSetScissor(ctx, 0, 0, 700, 700);
-    reiiCommandClear(ctx, REII_CLEAR_DEPTH_BIT | REII_CLEAR_COLOR_BIT, 0.f, 0, 0.f, 0.f, 0.f, 1.f);
+    reiiCommandSetViewport(ctx, list, 0, 0, 700, 700);
+    reiiCommandSetScissor(ctx, list, 0, 0, 700, 700);
+    reiiCommandClear(ctx, list, REII_CLEAR_DEPTH_BIT | REII_CLEAR_COLOR_BIT, 0.f, 0, 0.f, 0.f, 0.f, 1.f);
     ReiiMeshTextureBindings bindings = {};
     bindings.binding[0] = REII_TEXTURE_BINDING_CUBE;
     bindings.texture[0] = cube;
-    reiiCommandMeshSetState(ctx, &mesh_skybox_state, &bindings);
-    reiiCommandMeshSet(ctx);
-    reiiCommandMeshPosition(ctx,-1,-1, 1, 1);
-    reiiCommandMeshPosition(ctx,-1,-1,-1, 1);
-    reiiCommandMeshPosition(ctx, 1,-1,-1, 1);
-    reiiCommandMeshPosition(ctx, 1,-1,-1, 1);
-    reiiCommandMeshPosition(ctx, 1,-1, 1, 1);
-    reiiCommandMeshPosition(ctx,-1,-1, 1, 1);
-    reiiCommandMeshPosition(ctx,-1, 1,-1, 1);
-    reiiCommandMeshPosition(ctx,-1,-1,-1, 1);
-    reiiCommandMeshPosition(ctx,-1,-1, 1, 1);
-    reiiCommandMeshPosition(ctx,-1,-1, 1, 1);
-    reiiCommandMeshPosition(ctx,-1, 1, 1, 1);
-    reiiCommandMeshPosition(ctx,-1, 1,-1, 1);
-    reiiCommandMeshPosition(ctx, 1,-1,-1, 1);
-    reiiCommandMeshPosition(ctx, 1, 1,-1, 1);
-    reiiCommandMeshPosition(ctx, 1, 1, 1, 1);
-    reiiCommandMeshPosition(ctx, 1, 1, 1, 1);
-    reiiCommandMeshPosition(ctx, 1,-1, 1, 1);
-    reiiCommandMeshPosition(ctx, 1,-1,-1, 1);
-    reiiCommandMeshPosition(ctx,-1, 1,-1, 1);
-    reiiCommandMeshPosition(ctx,-1, 1, 1, 1);
-    reiiCommandMeshPosition(ctx, 1, 1, 1, 1);
-    reiiCommandMeshPosition(ctx, 1, 1, 1, 1);
-    reiiCommandMeshPosition(ctx, 1, 1,-1, 1);
-    reiiCommandMeshPosition(ctx,-1, 1,-1, 1);
-    reiiCommandMeshPosition(ctx,-1,-1, 1, 1);
-    reiiCommandMeshPosition(ctx, 1,-1, 1, 1);
-    reiiCommandMeshPosition(ctx, 1, 1, 1, 1);
-    reiiCommandMeshPosition(ctx, 1, 1, 1, 1);
-    reiiCommandMeshPosition(ctx,-1, 1, 1, 1);
-    reiiCommandMeshPosition(ctx,-1,-1, 1, 1);
-    reiiCommandMeshPosition(ctx,-1,-1,-1, 1);
-    reiiCommandMeshPosition(ctx,-1, 1,-1, 1);
-    reiiCommandMeshPosition(ctx, 1,-1,-1, 1);
-    reiiCommandMeshPosition(ctx, 1,-1,-1, 1);
-    reiiCommandMeshPosition(ctx,-1, 1,-1, 1);
-    reiiCommandMeshPosition(ctx, 1, 1,-1, 1);
-    reiiCommandMeshEnd(ctx);
-    reiiCommandMeshSetState(ctx, &mesh_state, &bindings);
-    reiiCommandMeshSet(ctx);
+    reiiCommandMeshSetState(ctx, list, &mesh_skybox_state, &bindings);
+    reiiCommandMeshSet(ctx, list);
+    reiiCommandMeshPosition(ctx, list,-1,-1, 1, 1);
+    reiiCommandMeshPosition(ctx, list,-1,-1,-1, 1);
+    reiiCommandMeshPosition(ctx, list, 1,-1,-1, 1);
+    reiiCommandMeshPosition(ctx, list, 1,-1,-1, 1);
+    reiiCommandMeshPosition(ctx, list, 1,-1, 1, 1);
+    reiiCommandMeshPosition(ctx, list,-1,-1, 1, 1);
+    reiiCommandMeshPosition(ctx, list,-1, 1,-1, 1);
+    reiiCommandMeshPosition(ctx, list,-1,-1,-1, 1);
+    reiiCommandMeshPosition(ctx, list,-1,-1, 1, 1);
+    reiiCommandMeshPosition(ctx, list,-1,-1, 1, 1);
+    reiiCommandMeshPosition(ctx, list,-1, 1, 1, 1);
+    reiiCommandMeshPosition(ctx, list,-1, 1,-1, 1);
+    reiiCommandMeshPosition(ctx, list, 1,-1,-1, 1);
+    reiiCommandMeshPosition(ctx, list, 1, 1,-1, 1);
+    reiiCommandMeshPosition(ctx, list, 1, 1, 1, 1);
+    reiiCommandMeshPosition(ctx, list, 1, 1, 1, 1);
+    reiiCommandMeshPosition(ctx, list, 1,-1, 1, 1);
+    reiiCommandMeshPosition(ctx, list, 1,-1,-1, 1);
+    reiiCommandMeshPosition(ctx, list,-1, 1,-1, 1);
+    reiiCommandMeshPosition(ctx, list,-1, 1, 1, 1);
+    reiiCommandMeshPosition(ctx, list, 1, 1, 1, 1);
+    reiiCommandMeshPosition(ctx, list, 1, 1, 1, 1);
+    reiiCommandMeshPosition(ctx, list, 1, 1,-1, 1);
+    reiiCommandMeshPosition(ctx, list,-1, 1,-1, 1);
+    reiiCommandMeshPosition(ctx, list,-1,-1, 1, 1);
+    reiiCommandMeshPosition(ctx, list, 1,-1, 1, 1);
+    reiiCommandMeshPosition(ctx, list, 1, 1, 1, 1);
+    reiiCommandMeshPosition(ctx, list, 1, 1, 1, 1);
+    reiiCommandMeshPosition(ctx, list,-1, 1, 1, 1);
+    reiiCommandMeshPosition(ctx, list,-1,-1, 1, 1);
+    reiiCommandMeshPosition(ctx, list,-1,-1,-1, 1);
+    reiiCommandMeshPosition(ctx, list,-1, 1,-1, 1);
+    reiiCommandMeshPosition(ctx, list, 1,-1,-1, 1);
+    reiiCommandMeshPosition(ctx, list, 1,-1,-1, 1);
+    reiiCommandMeshPosition(ctx, list,-1, 1,-1, 1);
+    reiiCommandMeshPosition(ctx, list, 1, 1,-1, 1);
+    reiiCommandMeshEnd(ctx, list);
+    reiiCommandMeshSetState(ctx, list, &mesh_state, &bindings);
+    reiiCommandMeshSet(ctx, list);
     for (int i = 0, mesh_vertex_count = countof(mesh_vertices) / 3; i < mesh_vertex_count; i += 1) {
-      reiiCommandMeshNormal(ctx, mesh_normals[i * 3 + 0], mesh_normals[i * 3 + 1], mesh_normals[i * 3 + 2]);
-      reiiCommandMeshPosition(ctx, mesh_vertices[i * 3 + 0], mesh_vertices[i * 3 + 1], mesh_vertices[i * 3 + 2], 1);
+      reiiCommandMeshNormal(ctx, list, mesh_normals[i * 3 + 0], mesh_normals[i * 3 + 1], mesh_normals[i * 3 + 2]);
+      reiiCommandMeshPosition(ctx, list, mesh_vertices[i * 3 + 0], mesh_vertices[i * 3 + 1], mesh_vertices[i * 3 + 2], 1);
     }
-    reiiCommandMeshEnd(ctx);
-  reiiCommandListEnd(ctx);
+    reiiCommandMeshEnd(ctx, list);
+  reiiCommandListEnd(ctx, list);
 
   glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 

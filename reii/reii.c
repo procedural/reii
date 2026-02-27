@@ -130,23 +130,23 @@ void reiiCommandListSet(ReiContext * context, ReiHandleCommandList list) {
   reiCommandListSet(context, list);
 }
 
-void reiiCommandListEnd(ReiContext * context) {
+void reiiCommandListEnd(ReiContext * context, ReiHandleCommandList list) {
   reiCommandListEnd(context);
 }
 
-void reiiCommandSetViewport(ReiContext * context, int x, int y, int width, int height) {
+void reiiCommandSetViewport(ReiContext * context, ReiHandleCommandList list, int x, int y, int width, int height) {
   reiCommandSetViewport(context, x, y, width, height);
 }
 
-void reiiCommandSetScissor(ReiContext * context, int x, int y, int width, int height) {
+void reiiCommandSetScissor(ReiContext * context, ReiHandleCommandList list, int x, int y, int width, int height) {
   reiCommandSetScissor(context, x, y, width, height);
 }
 
-void reiiCommandClear(ReiContext * context, ReiClearFlags clear, float depthValue, unsigned stencilValue, float colorR, float colorG, float colorB, float colorA) {
+void reiiCommandClear(ReiContext * context, ReiHandleCommandList list, ReiClearFlags clear, float depthValue, unsigned stencilValue, float colorR, float colorG, float colorB, float colorA) {
   reiCommandClear(context, clear, depthValue, stencilValue, colorR, colorG, colorB, colorA);
 }
 
-void reiiCommandMeshSetState(ReiContext * context, ReiiMeshState * state, ReiiMeshTextureBindings * bindings) {
+void reiiCommandMeshSetState(ReiContext * context, ReiHandleCommandList list, ReiiMeshState * state, ReiiMeshTextureBindings * bindings) {
   const char * error = NULL;
   unsigned i = 0;
   if (state != 0) {
@@ -203,27 +203,27 @@ void reiiCommandMeshSetState(ReiContext * context, ReiiMeshState * state, ReiiMe
   }
 }
 
-void reiiCommandMeshSet(ReiContext * context) {
+void reiiCommandMeshSet(ReiContext * context, ReiHandleCommandList list) {
   reiCommandMeshSet(context);
 }
 
-void reiiCommandMeshEnd(ReiContext * context) {
+void reiiCommandMeshEnd(ReiContext * context, ReiHandleCommandList list) {
   reiCommandMeshEnd(context);
 }
 
-void reiiCommandMeshTexcoord(ReiContext * context, unsigned index, float x, float y, float z, float w) {
+void reiiCommandMeshTexcoord(ReiContext * context, ReiHandleCommandList list, unsigned index, float x, float y, float z, float w) {
   reiCommandMeshTexcoord(context, index, x, y, z, w);
 }
 
-void reiiCommandMeshColor(ReiContext * context, float r, float g, float b, float a) {
+void reiiCommandMeshColor(ReiContext * context, ReiHandleCommandList list, float r, float g, float b, float a) {
   reiCommandMeshColor(context, r, g, b, a);
 }
 
-void reiiCommandMeshNormal(ReiContext * context, float x, float y, float z) {
+void reiiCommandMeshNormal(ReiContext * context, ReiHandleCommandList list, float x, float y, float z) {
   reiCommandMeshNormal(context, x, y, z);
 }
 
-void reiiCommandMeshPosition(ReiContext * context, float x, float y, float z, float w) {
+void reiiCommandMeshPosition(ReiContext * context, ReiHandleCommandList list, float x, float y, float z, float w) {
   reiCommandMeshPosition(context, x, y, z, w);
 }
 
