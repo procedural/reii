@@ -207,7 +207,7 @@ void reiiCreateContext                      (ReiiTypeProcedureGetProcAddress get
 
 // Texture
 
-void reiiCreateTexture                      (ReiiContext * context, ReiiHandleTexture * outTexture);
+void reiiCreateTexture                      (ReiiContext * context, ReiiTextureBinding binding, ReiiHandleTexture * outTexture);
 void reiiTextureSetStateMipmap              (ReiiContext * context, ReiiTextureBinding binding, ReiiHandleTexture bindingTexture, ReiiBool32 generateMipLevels);
 void reiiTextureSetStateSampler             (ReiiContext * context, ReiiTextureBinding binding, ReiiHandleTexture bindingTexture, ReiiSamplerFiltering magFiltering, ReiiSamplerFiltering minFiltering, ReiiSamplerBehaviorOutsideTextureCoordinate behaviorOutsideTextureCoordinateU, ReiiSamplerBehaviorOutsideTextureCoordinate behaviorOutsideTextureCoordinateV, int maxAnisotropy);
 void reiiTextureDefineAndCopyFromCpu        (ReiiContext * context, ReiiTextureBinding binding, ReiiHandleTexture bindingTexture, int bindingLevel, ReiiTextureTexelFormat bindingTexelFormat, int width, int height, ReiiTextureTexelFormat texelsFormat, ReiiTextureTexelType texelsType, int texelsBytesAlignment, const void * texels);

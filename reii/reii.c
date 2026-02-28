@@ -64,7 +64,7 @@ void reiiCreateContext(ReiTypeProcedureGetProcAddress getProcAddress, ReiContext
 
 // Texture
 
-void reiiCreateTexture(ReiContext * context, ReiHandleTexture * outTexture) {
+void reiiCreateTexture(ReiContext * context, ReiTextureBinding binding, ReiHandleTexture * outTexture) {
   outTexture[0] = reiCreateTexture(context);
 }
 

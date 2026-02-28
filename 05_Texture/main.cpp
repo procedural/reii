@@ -130,7 +130,7 @@ int main() {
     "END";
 
   ReiiHandleTexture texture1Handle = 0;
-  reiiCreateTexture(ctx, &texture1Handle);
+  reiiCreateTexture(ctx, REII_TEXTURE_BINDING_2D, &texture1Handle);
   reiiTextureSetStateMipmap(ctx, REII_TEXTURE_BINDING_2D, texture1Handle, 0);
   reiiTextureSetStateSampler(ctx, REII_TEXTURE_BINDING_2D, texture1Handle, REII_SAMPLER_FILTERING_NEAREST, REII_SAMPLER_FILTERING_NEAREST, REII_SAMPLER_BEHAVIOR_OUTSIDE_TEXTURE_COORDINATE_REPEAT, REII_SAMPLER_BEHAVIOR_OUTSIDE_TEXTURE_COORDINATE_REPEAT, 1);
   reiiTextureDefineAndCopyFromCpu(ctx, REII_TEXTURE_BINDING_2D, texture1Handle,
@@ -144,7 +144,7 @@ int main() {
     texture1);
 
   ReiiHandleTexture texture2Handle = 0;
-  reiiCreateTexture(ctx, &texture2Handle);
+  reiiCreateTexture(ctx, REII_TEXTURE_BINDING_2D, &texture2Handle);
   reiiTextureSetStateMipmap(ctx, REII_TEXTURE_BINDING_2D, texture2Handle, 0);
   reiiTextureSetStateSampler(ctx, REII_TEXTURE_BINDING_2D, texture2Handle, REII_SAMPLER_FILTERING_NEAREST, REII_SAMPLER_FILTERING_NEAREST, REII_SAMPLER_BEHAVIOR_OUTSIDE_TEXTURE_COORDINATE_REPEAT, REII_SAMPLER_BEHAVIOR_OUTSIDE_TEXTURE_COORDINATE_REPEAT, 1);
   reiiTextureDefineAndCopyFromCpu(ctx, REII_TEXTURE_BINDING_2D, texture2Handle,

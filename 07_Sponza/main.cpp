@@ -237,13 +237,13 @@ int main() {
 
   for (int i = 0; i < SUBMESH_COUNT; i += 1) {
     if (textures[i] == NULL) {
-      reiiCreateTexture(ctx, &submesh_texures[i]);
+      reiiCreateTexture(ctx, REII_TEXTURE_BINDING_2D, &submesh_texures[i]);
       reiiTextureSetStateMipmap(ctx, REII_TEXTURE_BINDING_2D, submesh_texures[i], 0);
       reiiTextureSetStateSampler(ctx, REII_TEXTURE_BINDING_2D, submesh_texures[i], REII_SAMPLER_FILTERING_NEAREST, REII_SAMPLER_FILTERING_NEAREST, REII_SAMPLER_BEHAVIOR_OUTSIDE_TEXTURE_COORDINATE_REPEAT, REII_SAMPLER_BEHAVIOR_OUTSIDE_TEXTURE_COORDINATE_REPEAT, 1);
       reiiTextureDefineAndCopyFromCpu(ctx, REII_TEXTURE_BINDING_2D, submesh_texures[i], 0, REII_TEXTURE_TEXEL_FORMAT_RGBA, 2, 2, REII_TEXTURE_TEXEL_FORMAT_RGBA, REII_TEXTURE_TEXEL_TYPE_U8, 4, nil_texture);
       continue;
     }
-    reiiCreateTexture(ctx, &submesh_texures[i]);
+    reiiCreateTexture(ctx, REII_TEXTURE_BINDING_2D, &submesh_texures[i]);
     reiiTextureSetStateMipmap(ctx, REII_TEXTURE_BINDING_2D, submesh_texures[i], 1);
     if (// Foliage:
         i == SPONZA_370_001 || i == SPONZA_369_001 || i == SPONZA_368_001 || i == SPONZA_367_001 || i == SPONZA_366_001 ||
