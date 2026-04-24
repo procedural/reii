@@ -2,68 +2,79 @@
 #include <string.h> // For strlen
 #include <stdio.h>  // For printf
 
-#ifdef _WIN32
+#if defined(_WIN32) && !defined(_WIN64)
+#pragma comment(lib, "../glfw32/lib/glfw3.lib")
+#endif
+#if defined(_WIN64)
 #pragma comment(lib, "../glfw/lib/glfw3.lib")
+#endif
+#if defined(_WIN32)
 #pragma comment(lib, "opengl32.lib")
 #endif
 
 // Context creation
 
+#if defined(_WIN32) && !defined(_WIN64)
+#define REI_CALLING_CONVENTION __stdcall
+#else
+#define REI_CALLING_CONVENTION
+#endif
+
 typedef struct ReiTypeContext {
-  void (*glGenProgramsARB)(int programsCount, ReiHandleProgram * outPrograms);
-  void (*glDeleteProgramsARB)(int programsCount, ReiHandleProgram * programs);
-  void (*glBindProgramARB)(ReiProgramBinding binding, ReiHandleProgram program);
-  void (*glProgramStringARB)(ReiProgramBinding binding, unsigned stringType, unsigned stringLengthWithoutNullTerminator, const char * string);
-  void (*glGenTextures)(int texturesCount, ReiHandleTexture * outTextures);
-  void (*glDeleteTextures)(int texturesCount, ReiHandleTexture * textures);
-  void (*glActiveTexture)(unsigned slot);
-  void (*glBindTexture)(ReiTextureBinding binding, ReiHandleTexture texture);
-  void (*glTexParameteri)(ReiTextureBinding binding, unsigned parameter, int value);
-  void (*glPixelStorei)(unsigned parameter, int value);
-  void (*glTexImage2D)(ReiTextureBinding binding, int bindingLevel, ReiTextureTexelFormat bindingTexelFormat, int width, int height, int setTo0, ReiTextureTexelFormat texelsFormat, ReiTextureTexelType texelsType, const void * texels);
-  void (*glTexSubImage2D)(ReiTextureBinding binding, int bindingLevel, int bindingX, int bindingY, int width, int height, ReiTextureTexelFormat texelsFormat, ReiTextureTexelType texelsType, const void * texels);
-  void (*glCopyTexImage2D)(ReiTextureBinding binding, int bindingLevel, ReiTextureTexelFormat bindingTexelFormat, int backbufferX, int backbufferY, int width, int height, int setTo0);
-  void (*glCopyTexSubImage2D)(ReiTextureBinding binding, int bindingLevel, int bindingX, int bindingY, int backbufferX, int backbufferY, int width, int height);
-  void (*glReadPixels)(int backbufferX, int backbufferY, int width, int height, ReiTextureTexelFormat texelsFormat, ReiTextureTexelType texelsType, void * outTexels);
-  ReiHandleCommandList (*glGenLists)(int setTo1);
-  void (*glDeleteLists)(ReiHandleCommandList list, int setTo1);
-  void (*glNewList)(ReiHandleCommandList list, unsigned mode);
-  void (*glEndList)();
-  void (*glClearDepthf)(float value);
-  void (*glClearStencil)(int value);
-  void (*glClearColor)(float r, float g, float b, float a);
-  void (*glClear)(ReiClearFlags mask);
-  void (*glEnable)(unsigned cap);
-  void (*glDisable)(unsigned cap);
-  void (*glViewport)(int x, int y, int width, int height);
-  void (*glScissor)(int x, int y, int width, int height);
-  void (*glCullFace)(unsigned mode);
-  void (*glFrontFace)(unsigned mode);
-  void (*glPolygonOffset)(float factor, float units);
-  void (*glDepthMask)(unsigned char flag);
-  void (*glDepthFunc)(unsigned func);
-  void (*glStencilOpSeparate)(unsigned face, unsigned sfail, unsigned dpfail, unsigned dppass);
-  void (*glStencilFuncSeparate)(unsigned face, unsigned func, int ref, unsigned mask);
-  void (*glStencilMaskSeparate)(unsigned face, unsigned mask);
-  void (*glLogicOp)(unsigned opcode);
-  void (*glBlendColor)(float red, float green, float blue, float alpha);
-  void (*glBlendFuncSeparate)(unsigned sfactorRGB, unsigned dfactorRGB, unsigned sfactorAlpha, unsigned dfactorAlpha);
-  void (*glBlendEquationSeparate)(unsigned modeRGB, unsigned modeAlpha);
-  void (*glColorMask)(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha);
-  void (*glBegin)(unsigned topology);
-  void (*glEnd)();
-  void (*glMultiTexCoord4f)(unsigned slot, float x, float y, float z, float w);
-  void (*glColor4f)(float r, float g, float b, float a);
-  void (*glNormal3f)(float x, float y, float z);
-  void (*glVertex4f)(float x, float y, float z, float w);
-  void (*glProgramEnvParameter4fARB)(ReiProgramBinding binding, unsigned index, float x, float y, float z, float w);
-  void (*glProgramLocalParameter4fARB)(ReiProgramBinding binding, unsigned index, float x, float y, float z, float w);
-  void (*glCallList)(ReiHandleCommandList list);
-  ReiStatus (*glGetError)();
-  const char * (*glGetString)(unsigned parameter);
-  void (*glGetIntegerv)(unsigned parameter, int * outValue);
-  void (*glFlush)();
-  void (*glFinish)();
+  void (REI_CALLING_CONVENTION *glGenProgramsARB)(int programsCount, ReiHandleProgram * outPrograms);
+  void (REI_CALLING_CONVENTION *glDeleteProgramsARB)(int programsCount, ReiHandleProgram * programs);
+  void (REI_CALLING_CONVENTION *glBindProgramARB)(ReiProgramBinding binding, ReiHandleProgram program);
+  void (REI_CALLING_CONVENTION *glProgramStringARB)(ReiProgramBinding binding, unsigned stringType, unsigned stringLengthWithoutNullTerminator, const char * string);
+  void (REI_CALLING_CONVENTION *glGenTextures)(int texturesCount, ReiHandleTexture * outTextures);
+  void (REI_CALLING_CONVENTION *glDeleteTextures)(int texturesCount, ReiHandleTexture * textures);
+  void (REI_CALLING_CONVENTION *glActiveTexture)(unsigned slot);
+  void (REI_CALLING_CONVENTION *glBindTexture)(ReiTextureBinding binding, ReiHandleTexture texture);
+  void (REI_CALLING_CONVENTION *glTexParameteri)(ReiTextureBinding binding, unsigned parameter, int value);
+  void (REI_CALLING_CONVENTION *glPixelStorei)(unsigned parameter, int value);
+  void (REI_CALLING_CONVENTION *glTexImage2D)(ReiTextureBinding binding, int bindingLevel, ReiTextureTexelFormat bindingTexelFormat, int width, int height, int setTo0, ReiTextureTexelFormat texelsFormat, ReiTextureTexelType texelsType, const void * texels);
+  void (REI_CALLING_CONVENTION *glTexSubImage2D)(ReiTextureBinding binding, int bindingLevel, int bindingX, int bindingY, int width, int height, ReiTextureTexelFormat texelsFormat, ReiTextureTexelType texelsType, const void * texels);
+  void (REI_CALLING_CONVENTION *glCopyTexImage2D)(ReiTextureBinding binding, int bindingLevel, ReiTextureTexelFormat bindingTexelFormat, int backbufferX, int backbufferY, int width, int height, int setTo0);
+  void (REI_CALLING_CONVENTION *glCopyTexSubImage2D)(ReiTextureBinding binding, int bindingLevel, int bindingX, int bindingY, int backbufferX, int backbufferY, int width, int height);
+  void (REI_CALLING_CONVENTION *glReadPixels)(int backbufferX, int backbufferY, int width, int height, ReiTextureTexelFormat texelsFormat, ReiTextureTexelType texelsType, void * outTexels);
+  ReiHandleCommandList (REI_CALLING_CONVENTION *glGenLists)(int setTo1);
+  void (REI_CALLING_CONVENTION *glDeleteLists)(ReiHandleCommandList list, int setTo1);
+  void (REI_CALLING_CONVENTION *glNewList)(ReiHandleCommandList list, unsigned mode);
+  void (REI_CALLING_CONVENTION *glEndList)();
+  void (REI_CALLING_CONVENTION *glClearDepthf)(float value);
+  void (REI_CALLING_CONVENTION *glClearStencil)(int value);
+  void (REI_CALLING_CONVENTION *glClearColor)(float r, float g, float b, float a);
+  void (REI_CALLING_CONVENTION *glClear)(ReiClearFlags mask);
+  void (REI_CALLING_CONVENTION *glEnable)(unsigned cap);
+  void (REI_CALLING_CONVENTION *glDisable)(unsigned cap);
+  void (REI_CALLING_CONVENTION *glViewport)(int x, int y, int width, int height);
+  void (REI_CALLING_CONVENTION *glScissor)(int x, int y, int width, int height);
+  void (REI_CALLING_CONVENTION *glCullFace)(unsigned mode);
+  void (REI_CALLING_CONVENTION *glFrontFace)(unsigned mode);
+  void (REI_CALLING_CONVENTION *glPolygonOffset)(float factor, float units);
+  void (REI_CALLING_CONVENTION *glDepthMask)(unsigned char flag);
+  void (REI_CALLING_CONVENTION *glDepthFunc)(unsigned func);
+  void (REI_CALLING_CONVENTION *glStencilOpSeparate)(unsigned face, unsigned sfail, unsigned dpfail, unsigned dppass);
+  void (REI_CALLING_CONVENTION *glStencilFuncSeparate)(unsigned face, unsigned func, int ref, unsigned mask);
+  void (REI_CALLING_CONVENTION *glStencilMaskSeparate)(unsigned face, unsigned mask);
+  void (REI_CALLING_CONVENTION *glLogicOp)(unsigned opcode);
+  void (REI_CALLING_CONVENTION *glBlendColor)(float red, float green, float blue, float alpha);
+  void (REI_CALLING_CONVENTION *glBlendFuncSeparate)(unsigned sfactorRGB, unsigned dfactorRGB, unsigned sfactorAlpha, unsigned dfactorAlpha);
+  void (REI_CALLING_CONVENTION *glBlendEquationSeparate)(unsigned modeRGB, unsigned modeAlpha);
+  void (REI_CALLING_CONVENTION *glColorMask)(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha);
+  void (REI_CALLING_CONVENTION *glBegin)(unsigned topology);
+  void (REI_CALLING_CONVENTION *glEnd)();
+  void (REI_CALLING_CONVENTION *glMultiTexCoord4f)(unsigned slot, float x, float y, float z, float w);
+  void (REI_CALLING_CONVENTION *glColor4f)(float r, float g, float b, float a);
+  void (REI_CALLING_CONVENTION *glNormal3f)(float x, float y, float z);
+  void (REI_CALLING_CONVENTION *glVertex4f)(float x, float y, float z, float w);
+  void (REI_CALLING_CONVENTION *glProgramEnvParameter4fARB)(ReiProgramBinding binding, unsigned index, float x, float y, float z, float w);
+  void (REI_CALLING_CONVENTION *glProgramLocalParameter4fARB)(ReiProgramBinding binding, unsigned index, float x, float y, float z, float w);
+  void (REI_CALLING_CONVENTION *glCallList)(ReiHandleCommandList list);
+  ReiStatus (REI_CALLING_CONVENTION *glGetError)();
+  const char * (REI_CALLING_CONVENTION *glGetString)(unsigned parameter);
+  void (REI_CALLING_CONVENTION *glGetIntegerv)(unsigned parameter, int * outValue);
+  void (REI_CALLING_CONVENTION *glFlush)();
+  void (REI_CALLING_CONVENTION *glFinish)();
 } ReiTypeContext;
 
 void reiCreateContext(ReiTypeProcedureGetProcAddress getProcAddress, ReiContext * outContext) {
